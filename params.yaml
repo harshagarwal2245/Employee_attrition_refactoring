@@ -1,0 +1,18 @@
+base:
+  project:Employee-Attrition 
+  random_state:42
+  target_col:Attrition
+
+data_source:
+  s3_source:data_given\employee.csv
+
+load_data:
+  raw_dataset_csv:data\raw\employee.csv
+
+split_data:
+  train_path:data\processed\train_employee.csv
+  test_path:data\processed\test_employee.csv
+  test_size:0.3
+
+
+model_dir:saved_models
