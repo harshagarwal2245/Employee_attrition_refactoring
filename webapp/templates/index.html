@@ -1,0 +1,152 @@
+  
+{% extends 'base.html' %}
+
+{% block title %}
+Employee Attrition
+{% endblock title %}
+
+
+{% block custom_css %}
+<!-- Custom CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock custom_css %}
+
+
+{% block body %}
+<!-- nav bar -->
+
+<nav class="navbar navbar-expand-lg navbar-light shadow fixed-top" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="/">WineQualityPrediction</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/c17hawke/dvc-plus-cml-test">source code</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div>
+    <!-- nav bar ends -->
+
+    <div class="container-fluid masthead">
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <form method="POST">
+                        <!-- Input block-->
+                        <div class="form-group">
+                            <label for="translation">
+                                <blockquote class="blockquote">
+                                    <p class="mb-2">Enter the details as indicated:</p>
+                                </blockquote>
+                            </label>
+                            <textarea class="form-control" name="fixed_acidity" rows="1"
+                                placeholder="Age 18.0-60.0"></textarea>
+                            <textarea class="form-control" name="volatile_acidity" rows="1"
+                                placeholder="BusinessTravel 0.0-2.0"></textarea>
+                            <textarea class="form-control" name="citric_acid" rows="1"
+                                placeholder="DailyRate"></textarea>
+                            <textarea class="form-control" name="residual_sugar" rows="1"
+                                placeholder="Department"></textarea>
+                            <textarea class="form-control" name="chlorides" rows="1" 
+                                placeholder="DistanceFromHome"></textarea>
+                            <textarea class="form-control" name="free_sulfur_dioxide" rows="1"
+                                placeholder="Education"></textarea>
+                            <textarea class="form-control" name="total_sulfur_dioxide" rows="1"
+                                placeholder="EducationField"></textarea>
+                            <textarea class="form-control" name="density" rows="1" 
+                                placeholder="EmployeeNumber"></textarea>
+                            <textarea class="form-control" name="pH" rows="1" 
+                                placeholder="EnvoirmentSatisfaction"></textarea>
+                            <textarea class="form-control" name="sulphates" rows="1" 
+                                placeholder="Gender"></textarea>
+                            <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="HourlyRate"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="JobInvolment"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="JobRole"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="JobLevel"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="JobSatisfication"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="MartialStatus"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="MonthlyIncome"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="MonthlyRate"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Num Company Worked"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Overtime"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Percentage SalaryHike"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Performance Rating"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Relationship Satisfacion"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Stock Optional Level"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="TotalWork in Years"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Training Time LastYear"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Work Life Balance"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Year At Company"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Year In CurrentYear"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Year In Current Role"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Year Since Last Promotion"></textarea>
+                                <textarea class="form-control" name="alcohol" rows="1" 
+                                placeholder="Year With Current manager"></textarea>
+                                
+
+                        </div>
+
+                        <!-- Select output language here. -->
+                        <div class="form-group">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Predict</button></br>
+                        </br>
+                    </form>
+                    <!-- Translated text returned by the Translate API is rendered here. -->
+                </div>
+                <div class="col">
+                    <form>
+                        <div class="form-group">
+                            <label for="translation-result">
+
+                                <blockquote class="blockquote">
+                                    <p class="mb-2">Prediction:</p>
+                                </blockquote>
+
+                            </label>
+                            <textarea readonly class="form-control" id="exTextarea" rows="5">{{ response }}</textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {% endblock body %}
+
+        {% block custom_js %}
+        <!-- Custom JS -->
+        <script src="{{ url_for('static', filename='script/index.js') }}"></script>
+        {% endblock custom_js %}
