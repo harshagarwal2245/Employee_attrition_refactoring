@@ -17,10 +17,10 @@ split_data:
 estimators:
   RandomForestClassifier:
     params:
-      # alpha: 0.88
-      # l1_ratio: 0.89
+      #n_estimators: 100
+      #max_feature: 6
       n_estimators: 100
-      max_feature: 6
+      max_feature: 7
 model_dir:
   saved_models 
 
