@@ -1,0 +1,4 @@
+{
+    "n_estimator": 100,
+    "max_feature": 6
+}

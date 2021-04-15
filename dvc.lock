@@ -10,25 +10,51 @@ stages:
       md5: edce84cd0f5bd6dc2932b98eee7aa770
       size: 899
     - path: src\load_data.py
-      md5: 1294ab92a3fd05aa9155038af913b485
-      size: 580
+      md5: 9a530afdb8faa05266721060f3d48f6f
+      size: 1080
     outs:
     - path: data\raw\employee.csv
-      md5: 699b02f7f57c2d38871d6610b3716b7d
-      size: 227974
+      md5: b5dc7740f3b301dff179752bcdb11d2e
+      size: 119540
   split_data:
     cmd: python src\split_data.py --config=params.yaml
     deps:
     - path: data\raw\employee.csv
-      md5: 699b02f7f57c2d38871d6610b3716b7d
-      size: 227974
+      md5: b5dc7740f3b301dff179752bcdb11d2e
+      size: 119540
     - path: src\split_data.py
-      md5: 32656fc2678b4201632109527fb8688f
-      size: 999
+      md5: f4ddba1134b731e5b299143a10bea3ba
+      size: 1007
     outs:
     - path: data\processed\test_employee.csv
-      md5: 0c0dfcd3ac65e48c02f32b78caa793a1
-      size: 68791
+      md5: 12ddc5caf4dae6bb7d99a3e1c8cf2e5e
+      size: 36193
     - path: data\processed\train_employee.csv
-      md5: 6cbc5366c62e013572e5515aea2a4daf
-      size: 159697
+      md5: 5388b4e2772ede12e38608471d1134e0
+      size: 83826
+  train_and_evaluate:
+    cmd: python src/train_and_evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/test_employee.csv
+      md5: 12ddc5caf4dae6bb7d99a3e1c8cf2e5e
+      size: 36193
+    - path: data/processed/train_employee.csv
+      md5: 5388b4e2772ede12e38608471d1134e0
+      size: 83826
+    - path: src/train_and_evaluate.py
+      md5: b835f0158618b0ce348d008bea1bc6b1
+      size: 2639
+    params:
+      params.yaml:
+        estimators.RandomForestClassifier.params.max_feature: 6
+        estimators.RandomForestClassifier.params.n_estimators: 100
+    outs:
+    - path: report\param.json
+      md5: 2d758f2dc379e8faf2562c027970545c
+      size: 51
+    - path: report\scores.json
+      md5: cacb663dfbda4700488580942d4c6543
+      size: 35
+    - path: saved_models/model.joblib
+      md5: cf43237fe934ff5f3e9ff35518b6f85b
+      size: 344
