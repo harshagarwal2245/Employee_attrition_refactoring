@@ -31,7 +31,7 @@ def predict(data):
     model = joblib.load(model_dir_path)
     prediction = model.predict(data).tolist()[0]
     try:
-        if 3 <= prediction <= 8:
+        if prediction in [0,1]:
             return prediction
         else:
             raise NotInRange
