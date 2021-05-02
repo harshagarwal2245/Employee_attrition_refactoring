@@ -10,40 +10,40 @@ stages:
       md5: edce84cd0f5bd6dc2932b98eee7aa770
       size: 899
     - path: src\load_data.py
-      md5: 9a530afdb8faa05266721060f3d48f6f
-      size: 1080
+      md5: 01475fabe417a581ce1e513f9cc6fdf0
+      size: 2086
     outs:
     - path: data\raw\employee.csv
-      md5: b5dc7740f3b301dff179752bcdb11d2e
-      size: 119540
+      md5: 9dc0a16ab99aac5c42ac69db8bdb8f7e
+      size: 72243
   split_data:
     cmd: python src\split_data.py --config=params.yaml
     deps:
     - path: data\raw\employee.csv
-      md5: b5dc7740f3b301dff179752bcdb11d2e
-      size: 119540
+      md5: 9dc0a16ab99aac5c42ac69db8bdb8f7e
+      size: 72243
     - path: src\split_data.py
-      md5: f4ddba1134b731e5b299143a10bea3ba
-      size: 1007
+      md5: 88b6b652586d255d2c923ebfa4b3c733
+      size: 1043
     outs:
     - path: data\processed\test_employee.csv
-      md5: 12ddc5caf4dae6bb7d99a3e1c8cf2e5e
-      size: 36193
+      md5: 54edaa12bcbdb5858242d25216f7c85c
+      size: 21836
     - path: data\processed\train_employee.csv
-      md5: 5388b4e2772ede12e38608471d1134e0
-      size: 83826
+      md5: 4819ea1e546da90290cfcdc3f82da3b6
+      size: 50648
   train_and_evaluate:
     cmd: python src/train_and_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/test_employee.csv
-      md5: 12ddc5caf4dae6bb7d99a3e1c8cf2e5e
-      size: 36193
+      md5: 54edaa12bcbdb5858242d25216f7c85c
+      size: 21836
     - path: data/processed/train_employee.csv
-      md5: 5388b4e2772ede12e38608471d1134e0
-      size: 83826
+      md5: 4819ea1e546da90290cfcdc3f82da3b6
+      size: 50648
     - path: src/train_and_evaluate.py
-      md5: b835f0158618b0ce348d008bea1bc6b1
-      size: 2639
+      md5: 4414759aa033f3fa31d40b3c6bbb47bc
+      size: 2701
     params:
       params.yaml:
         estimators.RandomForestClassifier.params.max_feature: 7
@@ -55,6 +55,6 @@ stages:
     - path: report\scores.json
       md5: 68952c71d58db924ae278c7d4e5774eb
       size: 35
-    - path: saved_models/model.joblib
-      md5: a8f0480972ed17170c8432c6ea29cd51
+    - path: saved_models/finalized_model.sav
+      md5: b6aff2acfea4a5f099b30459be6a712c
       size: 344

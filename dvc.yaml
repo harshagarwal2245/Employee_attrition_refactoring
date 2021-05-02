@@ -33,4 +33,4 @@ stages:
     - report\param.json:
         cache: false
     outs:
-      - saved_models/model.joblib
+      - saved_models/finalized_model.sav
