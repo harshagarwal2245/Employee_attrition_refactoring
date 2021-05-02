@@ -29,12 +29,12 @@ def api_response(request):
     try:
         data = np.array([list(request.json.values())])
         response = predict(data)
-	if response==0:
-		print("Employee will not leave")
-	else:
-		print("Employee will not leave")
-        response = {"response":response}
-        return response
+        if response==0:
+            print("Employee will not leave")
+        else:
+            print("Employee will leave")
+            response = {"response":response}
+            return response
     except Exception as e:
         print(e)
         error = {"error": "Something went wrong!! Try again"}
@@ -47,9 +47,12 @@ def index():
             if request.form:
                 data = dict(request.form).values()
                 data = [list(map(int, data))]
-		        
-                
                 response = predict(data)
+                if response==0:
+                    print("Employee will not leave")
+                else:
+                    print("Employee will  leave")
+                response = {"response":response}
                 return render_template("index.html", response=response)
 
             elif request.json:

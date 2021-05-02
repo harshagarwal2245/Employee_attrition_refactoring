@@ -1,7 +1,7 @@
 import yaml 
 import joblib 
 import os
-
+import numpy as np 
 params_path = "params.yaml"
 webapp_root = "webapp"
 
