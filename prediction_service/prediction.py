@@ -69,7 +69,7 @@ def validate_input(dict_request):
             raise NotInRange
 
     for col, val in dict_request.items():
-    
+        _validate_cols(col)
         _validate_values(col, val)
 
     return True
