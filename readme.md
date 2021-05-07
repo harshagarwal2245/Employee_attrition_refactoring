@@ -3,3 +3,6 @@ Postman app used for api testing
 in my case 127.0.0.1:5000/
 2. Select post method because we will expect values
 3. In body section add values
+ 
+mlflow server
+  --backend-store-uri sqlite:///mlflow
