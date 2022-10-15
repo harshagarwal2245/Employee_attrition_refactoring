@@ -33,28 +33,18 @@ stages:
       md5: 4819ea1e546da90290cfcdc3f82da3b6
       size: 50648
   train_and_evaluate:
-    cmd: python src/train_and_evaluate.py --config=params.yaml
+    cmd: python src\train_and_evaluate.py --config=params.yaml
     deps:
-    - path: data/processed/test_employee.csv
+    - path: data\processed\test_employee.csv
       md5: 54edaa12bcbdb5858242d25216f7c85c
       size: 21836
-    - path: data/processed/train_employee.csv
+    - path: data\processed\train_employee.csv
       md5: 4819ea1e546da90290cfcdc3f82da3b6
       size: 50648
-    - path: src/train_and_evaluate.py
-      md5: 4414759aa033f3fa31d40b3c6bbb47bc
-      size: 2701
+    - path: src\train_and_evaluate.py
+      md5: ffdc97001e6726d68543e5d8c7136bbb
+      size: 3343
     params:
       params.yaml:
         estimators.RandomForestClassifier.params.max_feature: 7
         estimators.RandomForestClassifier.params.n_estimators: 100
-    outs:
-    - path: report\param.json
-      md5: 0e82ff4e27579b388dc39747246f3cd9
-      size: 51
-    - path: report\scores.json
-      md5: 68952c71d58db924ae278c7d4e5774eb
-      size: 35
-    - path: saved_models/finalized_model.sav
-      md5: b6aff2acfea4a5f099b30459be6a712c
-      size: 344

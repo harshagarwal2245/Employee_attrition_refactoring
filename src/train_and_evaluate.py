@@ -11,10 +11,12 @@ import numpy as np
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from urllib.parse import urlparse
 from get_data import read_params
 import argparse
 import joblib
 import json
+import mlflow
 
 
 def eval_metrics(actual, pred):
@@ -38,47 +40,49 @@ def train_and_evaluate(config_path):
 
     train_x = train_data.drop(target, axis=1)
     test_x = test_data.drop(target, axis=1)
-    n_estimator = config["estimators"]["RandomForestClassifier"]["params"]["n_estimators"]
-    max_feature = config["estimators"]["RandomForestClassifier"]["params"]["max_feature"]
+    ###################################Mlflow######################3
+    # setting mlflow configuration
 
-    rf = RandomForestClassifier(
-        n_estimators=n_estimator,
-        max_features=max_feature,
-        random_state=random_state)
-    rf.fit(train_x, train_y)
+    mlflow_config=config["mlflow_config"]
+    remote_server_uri=mlflow_config["remote_server_uri"]
 
-    predicted_qualities = rf.predict(test_x)
+    mlflow.set_tracking_uri(remote_server_uri)
+    # if we don't define wxpweimwnt name it will set default name
+    mlflow.set_experiment(mlflow_config["experiment_name"])
+    
+    with mlflow.start_run(run_name=mlflow_config["run_name"]) as mlops_run:
+   
+        n_estimator = config["estimators"]["RandomForestClassifier"]["params"]["n_estimators"]
+        max_feature = config["estimators"]["RandomForestClassifier"]["params"]["max_feature"]
 
-    (acc, cm, rf) = eval_metrics(test_y, predicted_qualities)
+        rf = RandomForestClassifier(
+            n_estimators=n_estimator,
+            max_features=max_feature,
+            random_state=random_state)
+        rf.fit(train_x, train_y)
 
-    print("Random forest model (n_estimator=%f, max_feature=%f):" %
-          (n_estimator, max_feature))
-    print("  RMSE: %s" % acc)
-    print("  MAE: %s" % cm)
-    print("  R2: %s" % rf)
-    print(predicted_qualities[0])
+        predicted_qualities = rf.predict(test_x)
 
-    scores_file = config["reports"]["scores"]
-    params_file = config["reports"]["params"]
+        (acc, cm, rf) = eval_metrics(test_y, predicted_qualities)
 
-    with open(scores_file, "w") as f:
-        scores = {
-            "acc": acc
-
-        }
-        json.dump(scores, f, indent=4)
-
-    with open(params_file, "w") as f:
-        params = {
-            "n_estimator": n_estimator,
-            "max_feature": max_feature
-        }
-
-        json.dump(params, f, indent=4)
-
-    os.makedirs(model_dir, exist_ok=True)
-    model_path = os.path.join(model_dir, "finalized_model.sav")
-    joblib.dump(rf, model_path)
+        ###############################################################3    
+        """for logging values of metric and features we previously
+        files i.e. json but mlfow provides us and another method i.e
+        log_params and log metrics"""
+        
+        mlflow.log_param("n_estimator",n_estimator)
+        mlflow.log_param("max_feature",max_feature)
+        mlflow.log_metric("acc",acc)
+        
+        """
+	We will check if server is on if it is not it will create and folder
+	and then store information in it we will check scheme if scheme is file
+	""" 
+        tracking_url_type_store=urlparse(mlflow.get_artifact_uri()).scheme
+        if tracking_url_type_store != "file":
+            mlflow.sklearn.log_model(rf,"model",registered_model_name=mlflow_config["registered_model_name"])
+        else:
+            mlflow.sklearn.load_model(rf,"model")
 
 
 if __name__ == "__main__":
